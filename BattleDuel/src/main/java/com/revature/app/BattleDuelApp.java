@@ -64,7 +64,7 @@ public class BattleDuelApp {
 		
 		turnLoop: while (!gameOver) {
 			System.out.println("------------------");
-			switch (playerTurn()) {
+			switch (playerTurn(hero)) {
 				case 1: // Attack
 					System.out.println("------------------");
 					System.out.println("You attack!");
@@ -82,6 +82,17 @@ public class BattleDuelApp {
 						(hero.getHealth() - health) + " health.");
 					System.out.println("Your health: " + hero.getHealth());
 					break;
+				case 3:
+					if(hero.getLevelOfPower()==2) {
+					System.out.println("------------------");
+					System.out.println("Your special attack!");
+					int specAttack = hero.specialAttack();
+					enemy.getAttacked(specAttack);
+					System.out.println("Enemy took " + specAttack + " damage.");
+					System.out.println("Enemy health: " + enemy.getHealth());
+					hero.setLevelOfPower(2);
+					break;
+					}
 				default:
 					System.out.println("You didn't choose anything.");
 					continue turnLoop;
@@ -118,11 +129,13 @@ public class BattleDuelApp {
 		return false;
 	}
 	
-	public static int playerTurn() {
+	public static int playerTurn(Hero hero) {
 		System.out.println("Your turn");
 		System.out.println("Choose your move: ");
 		System.out.println("1. Attack");
 		System.out.println("2. Heal");
+		if (hero.getLevelOfPower()==2) {
+		System.out.println("3. Special Attack");}
 		return (Integer.valueOf(scan.nextLine()));
 	}
 
